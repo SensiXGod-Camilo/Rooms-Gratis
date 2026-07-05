@@ -4,16 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SensiXGod Room</title>
+    <!-- Fuente estilo Minecraft -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Minecraftia&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --fondo-oscuro: #0d0d12;
+            --tarjeta-oscuro: #16161d;
+            --texto-oscuro: #ffffff;
+            --verde: #00ff88;
+            --azul: #2563eb;
+            --gris: #333333;
+            --neon: #00ffff;
+            --rojo: #ff4444;
+        }
+        .modo-claro {
+            --fondo-oscuro: #f0f0f0;
+            --tarjeta-oscuro: #ffffff;
+            --texto-oscuro: #111111;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: sans-serif;
+            font-family: 'Minecraftia', 'Press Start 2P', cursive;
+            text-transform: uppercase;
+            image-rendering: pixelated;
         }
+
         body {
-            background: #0d0d12;
-            color: #fff;
+            background: var(--fondo-oscuro);
+            color: var(--texto-oscuro);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -21,209 +42,404 @@
             justify-content: center;
             padding: 2rem;
             text-align: center;
-        }
-        .pantalla {
-            width: 100%;
-            max-width: 500px;
-            display: none;
-            animation: aparecer 0.4s ease;
-        }
-        .activa { display: block; }
-        @keyframes aparecer {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            transition: background 0.5s ease, color 0.5s ease;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* Pantalla Inicial */
-        h1 {
-            font-size: 3.5rem;
-            color: #00ff88;
-            text-shadow: 0 0 20px rgba(0,255,136,0.5);
-            margin-bottom: 3rem;
-            line-height: 1.2;
+        /* Fondo animado épico */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(0,255,136,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(0,255,255,0.1) 0%, transparent 50%);
+            animation: fondoMovil 8s ease-in-out infinite alternate;
+            z-index: -1;
         }
-        .boton-verde {
-            background: #00ff88;
-            color: #000;
-            border: none;
-            padding: 1.2rem 3rem;
-            font-size: 1.3rem;
-            font-weight: bold;
-            border-radius: 12px;
+        @keyframes fondoMovil {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* Botón modo claro/oscuro */
+        .boton-tema {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--verde);
+            border-radius: 50%;
+            background: var(--tarjeta-oscuro);
+            color: var(--verde);
+            font-size: 24px;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(0,255,136,0.4);
-            margin: 1rem;
+            z-index: 999;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px var(--verde);
         }
-        .boton-verde:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(0,255,136,0.7);
+        .boton-tema:hover {
+            transform: rotate(180deg) scale(1.2);
+            box-shadow: 0 0 30px var(--verde);
         }
-        .flecha {
-            font-size: 2rem;
-            margin-top: 1rem;
-            color: #00ff88;
-            animation: parpadeo 1.5s infinite;
+
+        /* Botón WhatsApp */
+        .boton-whatsapp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            text-decoration: none;
+            z-index: 999;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(37,211,102,0.5);
+            border: 3px solid white;
         }
-        @keyframes parpadeo {
-            0%,100% { opacity: 1; }
-            50% { opacity: 0.4; }
+        .boton-whatsapp:hover {
+            transform: scale(1.3) rotate(-10deg);
+            box-shadow: 0 0 40px rgba(37,211,102,0.8);
+        }
+
+        /* Pantallas */
+        .pantalla {
+            width: 100%;
+            max-width: 550px;
+            display: none;
+            animation: entrada 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .activa { display: block; }
+        @keyframes entrada {
+            from { opacity: 0; transform: translateY(50px) scale(0.8); filter: blur(5px); }
+            to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        }
+
+        /* Título principal */
+        h1 {
+            font-size: 2.8rem;
+            color: var(--verde);
+            text-shadow: 0 0 10px var(--verde), 0 0 20px var(--verde), 0 0 40px var(--verde);
+            margin-bottom: 3rem;
+            line-height: 1.3;
+            animation: tituloBrillo 2s ease-in-out infinite alternate;
+            letter-spacing: 2px;
+        }
+        @keyframes tituloBrillo {
+            0% { text-shadow: 0 0 10px var(--verde), 0 0 20px var(--verde); }
+            100% { text-shadow: 0 0 20px var(--verde), 0 0 40px var(--verde), 0 0 60px var(--verde); }
         }
 
         /* Botones generales */
-        .boton {
-            display: block;
-            width: 100%;
-            padding: 1rem;
-            margin: 0.8rem 0;
-            border: none;
-            border-radius: 10px;
+        .boton-verde {
+            background: linear-gradient(180deg, #00ff88 0%, #00cc6a 100%);
+            color: #000;
+            border: 4px solid #005533;
+            padding: 1.3rem 2.5rem;
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.2s ease;
+            box-shadow: 0 6px 0 #005533, 0 0 20px rgba(0,255,136,0.4);
+            margin: 1rem;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        .boton-verde::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+            opacity: 0;
+        }
+        .boton-verde:hover::after {
+            left: 150%;
+            opacity: 1;
+        }
+        .boton-verde:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 0 #005533, 0 0 40px rgba(0,255,136,0.7);
+        }
+        .boton-verde:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #005533;
+        }
+
+        .flecha {
+            font-size: 3rem;
+            margin-top: 2rem;
+            color: var(--verde);
+            animation: flechaMueve 1s ease-in-out infinite;
+            text-shadow: 0 0 15px var(--verde);
+        }
+        @keyframes flechaMueve {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(15px); }
+        }
+
+        .boton {
+            display: block;
+            width: 100%;
+            padding: 1.1rem;
+            margin: 1rem 0;
+            border: 4px solid transparent;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
             text-decoration: none;
         }
-        .boton-azul { background: #2563eb; color: white; }
-        .boton-azul:hover { background: #1d4ed8; }
-        .boton-gris { background: #333; color: white; }
-        .boton-gris:hover { background: #444; }
-        .boton-verde2 { background: #00ff88; color: #000; }
-        .boton-verde2:hover { background: #00cc6a; }
-
-        /* Tarjetas y textos */
-        .tarjeta {
-            background: #16161d;
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid #333;
-            margin: 1rem 0;
+        .boton-azul {
+            background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border-color: #1e3a8a;
+            box-shadow: 0 6px 0 #1e3a8a;
         }
+        .boton-azul:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #1e3a8a, 0 0 25px rgba(59,130,246,0.5);
+        }
+        .boton-gris {
+            background: linear-gradient(180deg, #4b5563 0%, #374151 100%);
+            color: white;
+            border-color: #1f2937;
+            box-shadow: 0 6px 0 #1f2937;
+        }
+        .boton-gris:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #1f2937;
+        }
+        .boton-verde2 {
+            background: linear-gradient(180deg, #00ff88 0%, #00cc6a 100%);
+            color: #000;
+            border-color: #005533;
+            box-shadow: 0 6px 0 #005533;
+        }
+        .boton-verde2:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 0 #005533, 0 0 25px rgba(0,255,136,0.5);
+        }
+
+        .tarjeta {
+            background: var(--tarjeta-oscuro);
+            padding: 2rem;
+            border-radius: 4px;
+            border: 4px solid var(--verde);
+            margin: 1.5rem 0;
+            box-shadow: 0 0 30px rgba(0,255,136,0.2), inset 0 0 15px rgba(0,255,136,0.05);
+            position: relative;
+        }
+        .tarjeta::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--verde), var(--neon), var(--verde));
+            z-index: -1;
+            border-radius: 6px;
+            opacity: 0.5;
+            animation: bordeBrillo 3s linear infinite;
+        }
+        @keyframes bordeBrillo {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
         h2 {
-            color: #00ffff;
+            color: var(--neon);
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            text-shadow: 0 0 15px var(--neon);
+        }
+        h3 {
+            color: var(--verde);
             margin-bottom: 1.5rem;
-            font-size: 1.8rem;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px var(--verde);
         }
         .aviso {
-            color: #ff4444;
+            color: var(--rojo);
             font-weight: bold;
             margin: 1rem 0;
-            padding: 0.8rem;
+            padding: 1rem;
             background: rgba(255,68,68,0.1);
-            border-radius: 8px;
+            border: 3px solid var(--rojo);
+            border-radius: 4px;
+            animation: avisoParpadeo 1s ease-in-out infinite alternate;
+        }
+        @keyframes avisoParpadeo {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
         }
         .contraseña {
-            margin-top: 1rem;
-            padding: 0.8rem;
-            background: rgba(0,255,136,0.1);
-            border-radius: 8px;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(0,255,136,0.15);
+            border: 3px dashed var(--verde);
+            border-radius: 4px;
             font-weight: bold;
-            color: #00ff88;
+            color: var(--verde);
+            font-size: 1rem;
+            text-shadow: 0 0 8px var(--verde);
+            word-break: break-all;
         }
         iframe {
             width: 100%;
-            border-radius: 10px;
-            margin: 1rem 0;
-            border: none;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            border: 4px solid var(--verde);
+            box-shadow: 0 0 20px rgba(0,255,136,0.3);
         }
         .volver {
             margin-top: 2rem;
-            color: #888;
+            color: var(--texto-oscuro);
+            opacity: 0.7;
             cursor: pointer;
             text-decoration: underline;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: inline-block;
         }
-        .volver:hover { color: #fff; }
+        .volver:hover {
+            opacity: 1;
+            transform: translateX(-5px);
+            color: var(--verde);
+        }
+        p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
 
+    <!-- Botón Cambio de Tema -->
+    <button class="boton-tema" id="botonTema" onclick="cambiarTema()">☀️</button>
+
+    <!-- Botón WhatsApp -->
+    <a href="https://whatsapp.com/channel/0029Vb6vN7xEquiQMAAQuK0M" target="_blank" class="boton-whatsapp">💬</a>
+
     <!-- 1. PANTALLA INICIO -->
     <div class="pantalla activa" id="inicio">
-        <h1>SensiXGod<br>Room Gratis</h1>
-        <button class="boton-verde" onclick="mostrar('seleccion')">Continuar</button>
-        <div class="flecha">⬇️</div>
+        <h1>SENSIXGOD<br>ROOM GRATIS</h1>
+        <button class="boton-verde" onclick="mostrar('seleccion')">CONTINUAR</button>
+        <div class="flecha">⬇</div>
     </div>
 
     <!-- 2. PANTALLA ROOM -->
     <div class="pantalla" id="seleccion">
-        <h2>Room</h2>
-        <button class="boton boton-azul" onclick="mostrar('bienvenido-android')">Android</button>
-        <button class="boton boton-gris" onclick="alert('⚠️ Todo esto es solo para Android. No disponible para iOS.')">iOS</button>
+        <h2>ELIGE TU ROOM</h2>
+        <button class="boton boton-azul" onclick="mostrar('bienvenido-android')">ANDROID</button>
+        <button class="boton boton-gris" onclick="alert('⚠️ SOLO DISPONIBLE PARA ANDROID. VERSIÓN IOS NO EXISTE.')">IOS</button>
     </div>
 
     <!-- 3. BIENVENIDA ANDROID -->
     <div class="pantalla" id="bienvenido-android">
-        <h2>Bienvenido de nuevo</h2>
-        <button class="boton boton-verde2" onclick="mostrar('salas-android')">Rooms para Android</button>
-        <div class="volver" onclick="mostrar('seleccion')">← Volver</div>
+        <h2>BIENVENIDO DE NUEVO</h2>
+        <button class="boton boton-verde2" onclick="mostrar('salas-android')">VER ROOMS ANDROID</button>
+        <div class="volver" onclick="mostrar('seleccion')">← VOLVER</div>
     </div>
 
     <!-- 4. LISTA DE SALAS -->
     <div class="pantalla" id="salas-android">
-        <button class="boton boton-azul" onclick="mostrar('p2077-paso1')">P2077Kng Room</button>
-        <button class="boton boton-azul" onclick="mostrar('ffh4x-info')">FFH4X Room</button>
-        <div class="volver" onclick="mostrar('bienvenido-android')">← Volver</div>
+        <button class="boton boton-azul" onclick="mostrar('p2077-paso1')">P2077KNG ROOM</button>
+        <button class="boton boton-azul" onclick="mostrar('ffh4x-info')">FFH4X ROOM</button>
+        <div class="volver" onclick="mostrar('bienvenido-android')">← VOLVER</div>
     </div>
 
     <!-- ===== SALA P2077KNG ===== -->
     <div class="pantalla" id="p2077-paso1">
         <div class="tarjeta">
-            <h3>Paso 1: Instalar ZArchiver</h3>
-            <a href="https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver" target="_blank" class="boton boton-verde2">Instalar</a>
-            <button class="boton boton-gris" onclick="mostrar('p2077-paso2')">Ya lo tengo instalado</button>
+            <h3>PASO 1: INSTALAR ZARCHIVER</h3>
+            <a href="https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver" target="_blank" class="boton boton-verde2">⬇ INSTALAR AHORA</a>
+            <button class="boton boton-gris" onclick="mostrar('p2077-paso2')">✅ YA LO TENGO INSTALADO</button>
         </div>
-        <div class="volver" onclick="mostrar('salas-android')">← Volver</div>
+        <div class="volver" onclick="mostrar('salas-android')">← VOLVER</div>
     </div>
 
     <div class="pantalla" id="p2077-paso2">
         <div class="tarjeta">
-            <h3>Paso 2: Instalar VPhoneOS</h3>
-            <a href="https://play.google.com/store/apps/details?id=com.yoyo.snake.rush" target="_blank" class="boton boton-verde2">Instalar</a>
-            <button class="boton boton-gris" onclick="mostrar('p2077-paso3')">Ya lo tengo instalado</button>
+            <h3>PASO 2: INSTALAR VPHONEOS</h3>
+            <a href="https://play.google.com/store/apps/details?id=com.yoyo.snake.rush" target="_blank" class="boton boton-verde2">⬇ INSTALAR AHORA</a>
+            <button class="boton boton-gris" onclick="mostrar('p2077-paso3')">✅ YA LO TENGO INSTALADO</button>
         </div>
-        <div class="volver" onclick="mostrar('p2077-paso1')">← Volver</div>
+        <div class="volver" onclick="mostrar('p2077-paso1')">← VOLVER</div>
     </div>
 
     <div class="pantalla" id="p2077-paso3">
         <div class="tarjeta">
-            <h3>Paso 3: Instalar La Rom</h3>
-            <a href="https://devuploads.com/zjigqw7fkaai" target="_blank" class="boton boton-verde2">Descargar e Instalar</a>
-            <div class="contraseña">Contraseña: SensiXGod</div>
-            <button class="boton boton-gris" onclick="mostrar('p2077-final')">Ya lo Descargue</button>
+            <h3>PASO 3: DESCARGAR LA ROM</h3>
+            <a href="https://devuploads.com/zjigqw7fkaai" target="_blank" class="boton boton-verde2">⬇ DESCARGAR ROM</a>
+            <div class="contraseña">🔑 CONTRASEÑA: SENSIXGOD</div>
+            <button class="boton boton-gris" onclick="mostrar('p2077-final')">✅ YA LA DESCARGUE</button>
         </div>
-        <div class="volver" onclick="mostrar('p2077-paso2')">← Volver</div>
+        <div class="volver" onclick="mostrar('p2077-paso2')">← VOLVER</div>
     </div>
 
     <div class="pantalla" id="p2077-final">
         <div class="tarjeta">
-            <h3>Último Paso (El más importante)</h3>
-            <p style="margin:1rem 0;">Mira el tutorial completo hasta el final para no tener errores:</p>
-            <iframe width="100%" height="250" src="https://www.youtube.com/embed/r8qGNV0N7rY" allowfullscreen></iframe>
+            <h3>⚠️ ÚLTIMO PASO - EL MÁS IMPORTANTE ⚠️</h3>
+            <p>MIRA EL TUTORIAL HASTA EL FINAL PARA NO TENER ERRORES:</p>
+            <iframe width="100%" height="280" src="https://www.youtube.com/embed/r8qGNV0N7rY" allowfullscreen></iframe>
         </div>
-        <div class="volver" onclick="mostrar('salas-android')">← Volver al menú</div>
+        <div class="volver" onclick="mostrar('salas-android')">← VOLVER AL MENÚ</div>
     </div>
 
     <!-- ===== SALA FFH4X ===== -->
     <div class="pantalla" id="ffh4x-info">
         <div class="tarjeta">
-            <h3>FFH4X Room</h3>
-            <p style="margin:1rem 0;">Descarga la Rom oficial aquí abajo:</p>
-            <a href="https://gofile.io/d/ka47n6" target="_blank" class="boton boton-verde2">Descargar Rom</a>
-            <div class="contraseña">Contraseña: FFH4XSensiXGod</div>
-            <p style="margin-top:1.5rem; color:#aaa;">⚠️ No se necesita tutorial especial, sigue los pasos de instalación normal.</p>
+            <h3>FFH4X ROOM</h3>
+            <p>DESCARGA LA ROM OFICIAL AQUÍ:</p>
+            <a href="https://gofile.io/d/ka47n6" target="_blank" class="boton boton-verde2">⬇ DESCARGAR ROM</a>
+            <div class="contraseña">🔑 CONTRASEÑA: FFH4XSENSIXGOD</div>
+            <p style="margin-top:1.5rem;">⚠️ NO NECESITAS TUTORIAL, SIGUE LOS PASOS NORMALES.</p>
         </div>
-        <div class="volver" onclick="mostrar('salas-android')">← Volver</div>
+        <div class="volver" onclick="mostrar('salas-android')">← VOLVER</div>
     </div>
 
 
     <script>
+        // Cambio de tema Sol/Luna
+        function cambiarTema() {
+            const body = document.body;
+            const boton = document.getElementById('botonTema');
+            body.classList.toggle('modo-claro');
+            
+            if(body.classList.contains('modo-claro')) {
+                boton.textContent = '🌙';
+            } else {
+                boton.textContent = '☀️';
+            }
+        }
+
+        // Navegación entre pantallas con efecto
         function mostrar(idPantalla) {
-            // Ocultar todas
-            document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
-            // Mostrar la seleccionada
+            document.querySelectorAll('.pantalla').forEach(pantalla => {
+                pantalla.classList.remove('activa');
+            });
             document.getElementById(idPantalla).classList.add('activa');
-            // Subir al inicio
-            window.scrollTo(0,0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
