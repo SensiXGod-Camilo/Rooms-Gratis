@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SensiXGod Room</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        body {
+            background: #0d0d12;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        .pantalla {
+            width: 100%;
+            max-width: 500px;
+            display: none;
+            animation: aparecer 0.4s ease;
+        }
+        .activa { display: block; }
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Pantalla Inicial */
+        h1 {
+            font-size: 3.5rem;
+            color: #00ff88;
+            text-shadow: 0 0 20px rgba(0,255,136,0.5);
+            margin-bottom: 3rem;
+            line-height: 1.2;
+        }
+        .boton-verde {
+            background: #00ff88;
+            color: #000;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(0,255,136,0.4);
+            margin: 1rem;
+        }
+        .boton-verde:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0,255,136,0.7);
+        }
+        .flecha {
+            font-size: 2rem;
+            margin-top: 1rem;
+            color: #00ff88;
+            animation: parpadeo 1.5s infinite;
+        }
+        @keyframes parpadeo {
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Botones generales */
+        .boton {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin: 0.8rem 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .boton-azul { background: #2563eb; color: white; }
+        .boton-azul:hover { background: #1d4ed8; }
+        .boton-gris { background: #333; color: white; }
+        .boton-gris:hover { background: #444; }
+        .boton-verde2 { background: #00ff88; color: #000; }
+        .boton-verde2:hover { background: #00cc6a; }
+
+        /* Tarjetas y textos */
+        .tarjeta {
+            background: #16161d;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #333;
+            margin: 1rem 0;
+        }
+        h2 {
+            color: #00ffff;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        .aviso {
+            color: #ff4444;
+            font-weight: bold;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: rgba(255,68,68,0.1);
+            border-radius: 8px;
+        }
+        .contraseña {
+            margin-top: 1rem;
+            padding: 0.8rem;
+            background: rgba(0,255,136,0.1);
+            border-radius: 8px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        iframe {
+            width: 100%;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: none;
+        }
+        .volver {
+            margin-top: 2rem;
+            color: #888;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .volver:hover { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. PANTALLA INICIO -->
+    <div class="pantalla activa" id="inicio">
+        <h1>SensiXGod<br>Room Gratis</h1>
+        <button class="boton-verde" onclick="mostrar('seleccion')">Continuar</button>
+        <div class="flecha">⬇️</div>
+    </div>
+
+    <!-- 2. PANTALLA ROOM -->
+    <div class="pantalla" id="seleccion">
+        <h2>Room</h2>
+        <button class="boton boton-azul" onclick="mostrar('bienvenido-android')">Android</button>
+        <button class="boton boton-gris" onclick="alert('⚠️ Todo esto es solo para Android. No disponible para iOS.')">iOS</button>
+    </div>
+
+    <!-- 3. BIENVENIDA ANDROID -->
+    <div class="pantalla" id="bienvenido-android">
+        <h2>Bienvenido de nuevo</h2>
+        <button class="boton boton-verde2" onclick="mostrar('salas-android')">Rooms para Android</button>
+        <div class="volver" onclick="mostrar('seleccion')">← Volver</div>
+    </div>
+
+    <!-- 4. LISTA DE SALAS -->
+    <div class="pantalla" id="salas-android">
+        <button class="boton boton-azul" onclick="mostrar('p2077-paso1')">P2077Kng Room</button>
+        <button class="boton boton-azul" onclick="mostrar('ffh4x-info')">FFH4X Room</button>
+        <div class="volver" onclick="mostrar('bienvenido-android')">← Volver</div>
+    </div>
+
+    <!-- ===== SALA P2077KNG ===== -->
+    <div class="pantalla" id="p2077-paso1">
+        <div class="tarjeta">
+            <h3>Paso 1: Instalar ZArchiver</h3>
+            <a href="https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver" target="_blank" class="boton boton-verde2">Instalar</a>
+            <button class="boton boton-gris" onclick="mostrar('p2077-paso2')">Ya lo tengo instalado</button>
+        </div>
+        <div class="volver" onclick="mostrar('salas-android')">← Volver</div>
+    </div>
+
+    <div class="pantalla" id="p2077-paso2">
+        <div class="tarjeta">
+            <h3>Paso 2: Instalar VPhoneOS</h3>
+            <a href="https://play.google.com/store/apps/details?id=com.yoyo.snake.rush" target="_blank" class="boton boton-verde2">Instalar</a>
+            <button class="boton boton-gris" onclick="mostrar('p2077-paso3')">Ya lo tengo instalado</button>
+        </div>
+        <div class="volver" onclick="mostrar('p2077-paso1')">← Volver</div>
+    </div>
+
+    <div class="pantalla" id="p2077-paso3">
+        <div class="tarjeta">
+            <h3>Paso 3: Instalar La Rom</h3>
+            <a href="https://devuploads.com/zjigqw7fkaai" target="_blank" class="boton boton-verde2">Descargar e Instalar</a>
+            <div class="contraseña">Contraseña: SensiXGod</div>
+            <button class="boton boton-gris" onclick="mostrar('p2077-final')">Ya lo Descargue</button>
+        </div>
+        <div class="volver" onclick="mostrar('p2077-paso2')">← Volver</div>
+    </div>
+
+    <div class="pantalla" id="p2077-final">
+        <div class="tarjeta">
+            <h3>Último Paso (El más importante)</h3>
+            <p style="margin:1rem 0;">Mira el tutorial completo hasta el final para no tener errores:</p>
+            <iframe width="100%" height="250" src="https://www.youtube.com/embed/r8qGNV0N7rY" allowfullscreen></iframe>
+        </div>
+        <div class="volver" onclick="mostrar('salas-android')">← Volver al menú</div>
+    </div>
+
+    <!-- ===== SALA FFH4X ===== -->
+    <div class="pantalla" id="ffh4x-info">
+        <div class="tarjeta">
+            <h3>FFH4X Room</h3>
+            <p style="margin:1rem 0;">Descarga la Rom oficial aquí abajo:</p>
+            <a href="https://gofile.io/d/ka47n6" target="_blank" class="boton boton-verde2">Descargar Rom</a>
+            <div class="contraseña">Contraseña: FFH4XSensiXGod</div>
+            <p style="margin-top:1.5rem; color:#aaa;">⚠️ No se necesita tutorial especial, sigue los pasos de instalación normal.</p>
+        </div>
+        <div class="volver" onclick="mostrar('salas-android')">← Volver</div>
+    </div>
+
+
+    <script>
+        function mostrar(idPantalla) {
+            // Ocultar todas
+            document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+            // Mostrar la seleccionada
+            document.getElementById(idPantalla).classList.add('activa');
+            // Subir al inicio
+            window.scrollTo(0,0);
+        }
+    </script>
+</body>
+</html>
